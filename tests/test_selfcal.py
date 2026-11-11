@@ -15,6 +15,30 @@ def observations(seed=5):
 
 
 class SelfCalibrationTests(unittest.TestCase):
+    def test_sparse_stars_with_shared_sensor_shifts_recover_response(self):
+        rng = np.random.default_rng(31)
+        stars = np.tile(np.arange(6), 9)
+        frames = np.repeat(np.arange(9), 6)
+        positions = rng.uniform(-0.65, 0.65, (6, 2))
+        shifts = rng.uniform(-0.2, 0.2, (9, 2))
+        features = radial_features(positions[stars] + shifts[frames], [0.0, 0.0], 1.0)
+        truth = np.array([-0.25, -0.08])
+        y = features @ truth + rng.normal(7.0, 0.5, 6)[stars] + rng.normal(0.0, 0.02, 9)[frames]
+        fit = fit_stellar_response(y, features, stars, frames, np.full(len(y), 0.01))
+        np.testing.assert_allclose(fit.coefficients, truth, atol=1e-8)
+
+    def test_sparse_stars_without_sensor_motion_cannot_calibrate_response(self):
+        stars = np.tile(np.arange(6), 9)
+        frames = np.repeat(np.arange(9), 6)
+        positions = np.random.default_rng(31).uniform(-0.65, 0.65, (6, 2))
+        features = radial_features(positions[stars], [0.0, 0.0], 1.0)
+        info = response_information(features, stars, frames, np.full(len(stars), 0.01))
+        self.assertFalse(info["necessary_identifiability_check_passed"])
+        with self.assertRaises(ValueError):
+            fit_stellar_response(
+                np.ones(len(stars)), features, stars, frames, np.full(len(stars), 0.01)
+            )
+
     def test_recover_known_response_and_offsets(self):
         y, x, stars, frames, sigma, truth = observations()
         fit = fit_stellar_response(y, x, stars, frames, sigma)

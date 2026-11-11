@@ -13,6 +13,23 @@ from galaxy_astro.validation import (
 
 
 class BackgroundTests(unittest.TestCase):
+    def test_off_center_bright_nebula_and_dark_cloud_share_custom_protection(self):
+        yy, xx = np.mgrid[:79, :127]
+        plane = 12.0 + 0.04 * xx - 0.03 * yy
+        bright_radius = ((xx - 18) / 23.0) ** 2 + ((yy - 62) / 19.0) ** 2
+        dark_radius = ((xx - 94) / 14.0) ** 2 + ((yy - 17) / 11.0) ** 2
+        bright = 8.0 * np.maximum(1.0 - bright_radius, 0.0) ** 2
+        dark = -4.0 * np.maximum(1.0 - dark_radius, 0.0) ** 2
+        signal = bright + dark
+        protected = (bright_radius < 1.0) | (dark_radius < 1.0)
+        xy, values, _ = sample_background_cells(plane + signal, protected, cell_size=8)
+        model = fit_background_plane(xy, values, plane.shape)
+        predicted = model.predict(np.column_stack([xx.ravel(), yy.ravel()]))[:, 0].reshape(
+            plane.shape
+        )
+        np.testing.assert_allclose(predicted, plane, atol=1e-12)
+        np.testing.assert_allclose(plane + signal - predicted, signal, atol=1e-12)
+
     def test_whole_cell_protection_and_refit_injection(self):
         yy, xx = np.mgrid[:64, :80]
         plane = 3.0 + 0.02 * xx - 0.03 * yy

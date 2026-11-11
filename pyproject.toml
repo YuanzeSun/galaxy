@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "galaxy-astro-workflow"
 version = "0.1.0"
-description = "Deterministic astrophotography methods with explicit units and validation"
+description = "Step-by-step methods for mirrorless wide-field star photography"
 readme = "README.md"
 requires-python = ">=3.10"
 license = {file = "LICENSE"}

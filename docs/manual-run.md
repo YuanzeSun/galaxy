@@ -4,6 +4,8 @@
 
 所有相机与拍摄参数来自自己的输入。[换设备与天区](portability.md)列出了需要重算的部分和本例的适用条件；不使用原项目的固定机型参数。
 
+微单＋广角镜头拍摄银河以外的天区也使用这些接口，测光样本和天体保护区按[不同星野](star-fields.md)选择。没有流星、没有标注需求时不添加这些步骤；背景无法可靠估计时保留母版，不要求一定扣除。
+
 小图的完整调用示例在 [examples/connect_steps.py](../examples/connect_steps.py)。其中用到的读取、测光和WCS转换函数在 [examples/manual_steps.py](../examples/manual_steps.py)。示例只生成合成数据，不读取真实照片，也不写中间文件。
 
 在仓库根目录安装并运行：
@@ -284,7 +286,7 @@ coverage = result["coverage"]
 
 ## 7. 可选背景估计与验证
 
-另建一个参考坐标下的`H×W`保护掩膜，覆盖银河、星云、星团等真实天体，并排除空覆盖。新天区要重新画/生成掩膜，不能照搬另一张图的保护区。
+另建一个参考坐标下的`H×W`保护掩膜，覆盖本次需要保留的真实天体及弥散结构，并排除空覆盖。普通星野、星团、星云和银河分别选择保护范围；不使用默认银河带。新天区要重新画/生成掩膜，不能照搬另一张图的保护区。
 
 ```python
 from galaxy_astro.background import sample_background_cells, fit_background_plane
