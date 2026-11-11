@@ -2,6 +2,8 @@
 
 数组计算不读写照片，也不联网。除文件校验命令外，所有函数由调用者传入数组和参数。无效输出一般为 NaN，并同时返回显式有效掩膜或计数；不要用数值大于零来判断覆盖。
 
+函数之间如何交接，见[按步骤操作](manual-run.md)。可选的`examples/manual_steps.py`读取FITS并连接WCS、测光和重采样；它只在调用时读指定文件，不扫描目录，需安装`.[manual]`中的Astropy。
+
 | 模块/函数 | 输入与输出约定 |
 | --- | --- |
 | `calibration.calibrate_linear` | 可广播的 raw、含偏置 dark、正 response；返回信号、可选方差、有效掩膜。RGB 的二维响应需显式加 `[..., None]` |

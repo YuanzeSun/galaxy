@@ -14,6 +14,7 @@ dependencies = ["numpy>=2.0", "scipy>=1.13"]
 
 [project.optional-dependencies]
 dev = ["ruff>=0.11"]
+manual = ["astropy>=6"]
 
 [project.urls]
 Repository = "https://github.com/YuanzeSun/galaxy"

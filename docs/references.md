@@ -10,6 +10,7 @@
 - [rawpy API](https://letmaik.github.io/rawpy/api/index.html)：需要接入 RAW 解码时参考；本包不分发 RAW 适配器。
 - [Astrometry.net](https://astrometry.net/doc/readme.html)：星空定位工具；本包只计算已知相机模型，不自带定位服务。
 - [Gaia DR3 文档](https://gea.esac.esa.int/archive/documentation/GDR3/)：恒星位置与光谱参考来源。
+- [Astropy WCS接口](https://docs.astropy.org/en/stable/wcs/wcsapi.html)及[FITS图像](https://docs.astropy.org/en/stable/io/fits/usage/image.html)：手工连接示例的坐标和文件接口。
 
 历史处理中查过 Gaia、SIMBAD 和 CIE；本包测试与示例不查询这些服务，不需要账号或网络。需要真实数据时，应单独记录目录版本、历元、引用及服务要求，不把外部目录数据自动纳入本仓库的 Apache-2.0 许可。
 
