@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "galaxy-astro-workflow"
+version = "0.1.0"
+description = "Deterministic astrophotography methods with explicit units and validation"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {file = "LICENSE"}
+authors = [{name = "YuanzeSun"}]
+dependencies = ["numpy>=2.0", "scipy>=1.13"]
+
+[project.optional-dependencies]
+dev = ["ruff>=0.11"]
+
+[project.urls]
+Repository = "https://github.com/YuanzeSun/galaxy"
+
+[project.scripts]
+galaxy-astro = "galaxy_astro.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]
+

@@ -1,0 +1,9 @@
+Galaxy astrophotography workflow
+Copyright 2026 YuanzeSun
+
+This repository contains original methods extracted and generalized from a
+personal astrophotography processing project. Personal photographs, calibration
+arrays, star catalogs, third-party source code and fitted session parameters
+are not distributed here. NumPy and SciPy are installed as dependencies under
+their own licenses; their source distributions are not bundled.
+
